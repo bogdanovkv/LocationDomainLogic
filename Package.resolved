@@ -1,0 +1,43 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "DomainAbstraction",
+        "repositoryURL": "https://github.com/bogdanovkv/DomainAbstraction.git",
+        "state": {
+          "branch": null,
+          "revision": "d2bc3edb8398b7ac0a056ea0db44808afa91cc58",
+          "version": "1.0.1"
+        }
+      },
+      {
+        "package": "LocationDomainAbstraction",
+        "repositoryURL": "https://github.com/bogdanovkv/LocationDomainAbstraction.git",
+        "state": {
+          "branch": null,
+          "revision": "89fe836913ccfce86eb0179385556921b882f51f",
+          "version": "1.0.1"
+        }
+      },
+      {
+        "package": "LocationRepositoryAbstraction",
+        "repositoryURL": "https://github.com/bogdanovkv/LocationRepositoryAbstraction.git",
+        "state": {
+          "branch": null,
+          "revision": "41efc928102634738e9faf02391f65d1efed9fc2",
+          "version": "1.0.2"
+        }
+      },
+      {
+        "package": "UserSettingsRepositoryAbstraction",
+        "repositoryURL": "https://github.com/bogdanovkv/UserSettingsRepositoryAbstraction.git",
+        "state": {
+          "branch": null,
+          "revision": "e34ce7c936d6646d43e76e00df2cab3416e55d54",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
