@@ -13,6 +13,8 @@ import LocationDomainAbstraction
 
 public class LocationLogicAsembly {
 
+	public init() {}
+
 	public func createPrepareStorageUseCase(locationRepository: LocationRepositoryProtocol,
 											settingsRepository: UserSettingsRepositoryProtocol) -> UseCase<Void, Void> {
 		let prepareCitiesUseCase = PrepareCitiesUseCase(locationRepository: locationRepository)
