@@ -42,4 +42,8 @@ public class LocationLogicAsembly {
 	public func createGetCcountriesUseCase(locationRepository: LocationRepositoryProtocol) -> UseCaseSync<Void, [Country]> {
 		return GetCountriesUseCase(repository: locationRepository)
 	}
+
+	public func createGetLocationusCase(locationRepository: LocationRepositoryProtocol) -> UseCase<Void, Location> {
+		return LocationUseCase(repository: locationRepository)
+	}
 }
