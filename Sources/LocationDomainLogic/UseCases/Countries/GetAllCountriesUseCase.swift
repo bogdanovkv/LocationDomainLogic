@@ -10,10 +10,13 @@ import LocationRepositoryAbstraction
 import LocationDomainAbstraction
 import DomainAbstraction
 
-final class GetCountriesUseCase: UseCaseSync<Void, [Country]> {
-	private let repository: LocationRepositoryProtocol
+/// Кейс получения списка всех стран
+final class GetAllCountriesUseCase: UseCaseSync<Void, [Country]> {
+	private let repository: CountriesRepositoryProtocol
 
-	init(repository: LocationRepositoryProtocol) {
+	/// Инициализатор
+	/// - Parameter repository: репозиторий
+	init(repository: CountriesRepositoryProtocol) {
 		self.repository = repository
 	}
 

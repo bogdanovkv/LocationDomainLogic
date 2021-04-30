@@ -23,18 +23,18 @@ final class PrepareStorageUseCase: UseCase<Void, Void> {
 	private let prepareAirportsUseCase: UseCase<Void, Void>
 	private let prepareCountriesUseCase: UseCase<Void, Void>
 	private let prepareCitiesUseCase: UseCase<Void, Void>
+	private let clearStorageUseCase: UseCaseSync<Void, Void>
 	private var citiesLoaded: Bool
 	private var countriesLoaded: Bool
 	private var airportsLoad: Bool
-	private let locationRepository: LocationRepositoryProtocol
 
 	init(settingsRepository: UserSettingsRepositoryProtocol,
-		 locationRepository: LocationRepositoryProtocol,
 		 prepareAirportsUseCase: UseCase<Void, Void>,
 		 prepareCountriesUseCase: UseCase<Void, Void>,
-		 prepareCitiesUseCase: UseCase<Void, Void>) {
+		 prepareCitiesUseCase: UseCase<Void, Void>,
+		 clearStorageUseCase: UseCaseSync<Void, Void>) {
 		self.settingsRepository = settingsRepository
-		self.locationRepository = locationRepository
+		self.clearStorageUseCase = clearStorageUseCase
 		self.prepareCitiesUseCase = prepareCitiesUseCase
 		self.prepareCountriesUseCase = prepareCountriesUseCase
 		self.prepareAirportsUseCase = prepareAirportsUseCase
@@ -47,7 +47,7 @@ final class PrepareStorageUseCase: UseCase<Void, Void> {
 		guard !settingsRepository.didIntializeStorage else {
 			return completion(.success(()))
 		}
-		locationRepository.clearLocations()
+		clearStorageUseCase.execute(parameter: ())
 		let group = DispatchGroup()
 
 		group.enter()
@@ -81,7 +81,7 @@ final class PrepareStorageUseCase: UseCase<Void, Void> {
 				self.settingsRepository.didIntializeStorage = true
 				return completion(.success(()))
 			}
-			self.locationRepository.clearLocations()
+			self.clearStorageUseCase.execute(parameter: ())
 			completion(.failure(LocationError.undefined))
 		}))
 	}

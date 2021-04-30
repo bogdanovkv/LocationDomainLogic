@@ -11,36 +11,57 @@ import UserSettingsRepositoryAbstraction
 import DomainAbstraction
 import LocationDomainAbstraction
 
+/// Сборщик логики местоположений
 public class LocationLogicAsembly {
 
 	public init() {}
 
-	public func createPrepareStorageUseCase(locationRepository: LocationRepositoryProtocol,
+	/// Создает кейс подготовки хранилища
+	/// - Parameters:
+	///   - citiesRepository: репозиторий городов
+	///   - countriesRepository: репозиторий стран
+	///   - airportsRepository: репозиторий аэропортов
+	///   - settingsRepository: репозиторий с настройками
+	/// - Returns: кейс подготовки хранилища
+	public func createPrepareStorageUseCase(citiesRepository: CitiesRepositoryProtocol,
+											countriesRepository: CountriesRepositoryProtocol,
+											airportsRepository: AirportsRepositoryProtocol,
 											settingsRepository: UserSettingsRepositoryProtocol) -> UseCase<Void, Void> {
-		let prepareCitiesUseCase = PrepareCitiesUseCase(locationRepository: locationRepository)
-		let prepareAirportsUseCase = PrepareAirportsUseCase(locationRepository: locationRepository)
-		let prepareCountriesUseCase = PrepareCountriesUseCase(locationRepository: locationRepository)
+		let prepareCitiesUseCase = PrepareCitiesUseCase(repository: citiesRepository)
+		let prepareAirportsUseCase = PrepareAirportsUseCase(repository: airportsRepository)
+		let prepareCountriesUseCase = PrepareCountriesUseCase(repository: countriesRepository)
+		let clearStorageUseCase = ClearStorageUseCaseSync(citiesRepository: citiesRepository,
+														  countriesRepository: countriesRepository,
+														  airportsRepository: airportsRepository)
 		return PrepareStorageUseCase(settingsRepository: settingsRepository,
-									 locationRepository: locationRepository,
 									 prepareAirportsUseCase: prepareAirportsUseCase,
-									 prepareCountriesUseCase: prepareCountriesUseCase,
-									 prepareCitiesUseCase: prepareCitiesUseCase)
+									 prepareCountriesUseCase: prepareCitiesUseCase,
+									 prepareCitiesUseCase: prepareCountriesUseCase,
+									 clearStorageUseCase: clearStorageUseCase)
 	}
 
-	public func createGetCitySyncUseCase(locationRepository: LocationRepositoryProtocol) -> UseCaseSync<String, City?> {
-		return GetCityUseCase(repository: locationRepository)
+	public func createGetCitySyncUseCase(citiesRepository: CitiesRepositoryProtocol) -> UseCaseSync<String, City?> {
+		return GetCityByNameUseCase(repository: citiesRepository)
 	}
 
-	public func createGetCountrySyncUseCase(locationRepository: LocationRepositoryProtocol) -> UseCaseSync<String, Country?> {
-		return GetCountryUseCase(repository: locationRepository)
+	public func createGetCityByCodeSyncUseCase(citiesRepository: CitiesRepositoryProtocol) -> UseCaseSync<String, City?> {
+		return GetCityByCodeUseCase(repository: citiesRepository)
 	}
 
-	public func createGetCitiesUseCase(locationRepository: LocationRepositoryProtocol) -> UseCaseSync<Country, [City]> {
-		return GetCitiesUseCase(repository: locationRepository)
+	public func createGetCountryByNameSyncUseCase(countriesRepository: CountriesRepositoryProtocol) -> UseCaseSync<String, Country?> {
+		return GetCountryByNameUseCase(repository: countriesRepository)
 	}
 
-	public func createGetCcountriesUseCase(locationRepository: LocationRepositoryProtocol) -> UseCaseSync<Void, [Country]> {
-		return GetCountriesUseCase(repository: locationRepository)
+	public func createGetCountryByCodeSyncUseCase(countriesRepository: CountriesRepositoryProtocol) -> UseCaseSync<String, Country?> {
+		return GetCountryByCodeUseCase(repository: countriesRepository)
+	}
+
+	public func createGetCitiesByCountryCodeSyncUseCase(citiesRepository: CitiesRepositoryProtocol) -> UseCaseSync<String, [City]> {
+		return GetCitiesByCountryCodeSyncUseCase(repository: citiesRepository)
+	}
+
+	public func createGetCountriesUseCase(countriesRepository: CountriesRepositoryProtocol) -> UseCaseSync<Void, [Country]> {
+		return GetAllCountriesUseCase(repository: countriesRepository)
 	}
 
 	public func createGetLocationusCase(locationRepository: LocationRepositoryProtocol) -> UseCase<Void, Location> {

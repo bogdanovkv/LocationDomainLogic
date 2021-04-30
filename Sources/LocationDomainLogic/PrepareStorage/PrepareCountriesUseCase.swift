@@ -11,19 +11,19 @@ import LocationRepositoryAbstraction
 import LocationDomainAbstraction
 
 final class PrepareCountriesUseCase: UseCase<Void, Void> {
-	private let locationRepository: LocationRepositoryProtocol
+	private let repository: CountriesRepositoryProtocol
 
-	init(locationRepository: LocationRepositoryProtocol) {
-		self.locationRepository = locationRepository
+	init(repository: CountriesRepositoryProtocol) {
+		self.repository = repository
 	}
 
 	override func execute(parameter: Void, _ completion: @escaping (Result<Void, Error>) -> Void) {
-		locationRepository.loadCountries { [weak self] result in
+		repository.loadCountries { [weak self] result in
 			guard let self = self else {
 				return completion(.failure(LocationError.undefined))
 			}
 			if let countries = try? result.get() {
-				self.locationRepository.save(countries: countries) {
+				self.repository.save(countries: countries) {
 					completion(.success(()))
 				}
 				return

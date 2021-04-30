@@ -10,15 +10,12 @@ import LocationRepositoryAbstraction
 import LocationDomainAbstraction
 import DomainAbstraction
 
-protocol LocationUseCaseProtocol {
-	func getLocation(_ completion: @escaping (Result<LocationModel, Error>) -> Void)
-	func getCity(named: String) -> CityModel?
-	func getCountry(named: String) -> CountryModel?
-}
-
+/// Кейс получения местополжения
 final class LocationUseCase: UseCase<Void, Location> {
 	private let repository: LocationRepositoryProtocol
 
+	/// Инициализатор
+	/// - Parameter repository: реозиторий
 	init(repository: LocationRepositoryProtocol) {
 		self.repository = repository
 	}
